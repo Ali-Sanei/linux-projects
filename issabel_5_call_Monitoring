@@ -1,0 +1,5 @@
+curl -L -o callmonitoring.zip https://github.com/voipiran/IssabelCallMonitoring/archive/master.zip && \
+unzip -o callmonitoring.zip && \
+cd IssabelCallMonitoring-main && \
+chmod 755 install.sh && \
+yes | ./install.sh
