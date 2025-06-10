@@ -1,0 +1,36 @@
+volumes:
+  wordpress:
+  db:
+
+services:
+  db:
+
+    image: mysql:5.7
+    restart: always
+
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=somewordpress
+      - MYSQL_PASSWORD=wordpress
+      - MYSQL_DATABASE=wordpress
+      - MYSQL_USER=wordpress
+    expose: 
+      - 3306
+
+  app:
+    image: wordpress:latest
+    depends_on: 
+      - db 
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    links:
+      - db
+    volumes:
+      - wordpress:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=wordpress
+      - WORDPRESS_DB_PASSWORD=wordpress
+      - WORDPRESS_DB_NAME=wordpress
